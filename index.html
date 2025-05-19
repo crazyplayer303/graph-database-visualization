@@ -1,0 +1,221 @@
+import React, { useState } from 'react';
+import { PieChart, Pie, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line, AreaChart, Area } from 'recharts';
+
+const GraphDatabaseVisualizations = () => {
+  // Tab state
+  const [activeTab, setActiveTab] = useState('fraudReduction');
+  
+  // Data for the charts
+  const fraudReductionData = [
+    { name: 'Traditional DB', value: 1720, fill: '#8884d8' },
+    { name: 'Graph DB', value: 980, fill: '#82ca9d' },
+  ];
+  
+  const timeEfficiencyData = [
+    { name: 'Alert Triage (CBA)', traditional: 100, graph: 60 },
+    { name: 'Scenario Runtime (JP Morgan)', traditional: 100, graph: 5 },
+    { name: 'SAR Analysis (US Bank)', traditional: 100, graph: 43 },
+  ];
+  
+  const adoptionBarriersData = [
+    { name: 'Skills Shortage', value: 68 },
+    { name: 'Integration Complexity', value: 52 },
+    { name: 'License Cost', value: 47 },
+    { name: 'Data Migration', value: 41 },
+    { name: 'Security Concerns', value: 35 },
+  ];
+  
+  const falsePositiveReductionData = [
+    { name: 'Rule Engine', value: 92 },
+    { name: 'Graph DB', value: 65 },
+  ];
+  
+  const marketAdoptionData = [
+    { year: 2020, adoption: 12 },
+    { year: 2021, adoption: 18 },
+    { year: 2022, adoption: 27 },
+    { year: 2023, adoption: 38 },
+    { year: 2024, adoption: 52 },
+    { year: 2025, adoption: 63, projected: true },
+    { year: 2026, adoption: 72, projected: true },
+  ];
+
+  // Render functions for each chart
+  const renderFraudReduction = () => (
+    <div className="chart-container">
+      <h3 className="text-xl font-semibold mb-4">Fraud Loss Reduction per 1,000 Transactions (USD)</h3>
+      <p className="mb-4">Graph databases have been shown to reduce fraud losses by 43% compared to traditional database approaches.</p>
+      <div className="flex justify-center items-center">
+        <ResponsiveContainer width="100%" height={400}>
+          <BarChart data={fraudReductionData} layout="vertical">
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis type="number" />
+            <YAxis dataKey="name" type="category" />
+            <Tooltip formatter={(value) => [`$${value}`, 'Fraud Loss']} />
+            <Legend />
+            <Bar dataKey="value" name="USD per 1,000 Transactions" />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+      <div className="mt-4 text-sm text-gray-600">
+        <p>Source: McKinsey & Company (2024). 2024 in charts: Financial crime and fraud benchmarks.</p>
+      </div>
+    </div>
+  );
+
+  const renderTimeEfficiency = () => (
+    <div className="chart-container">
+      <h3 className="text-xl font-semibold mb-4">Time Efficiency Comparison (% of Original Time)</h3>
+      <p className="mb-4">Graph databases dramatically reduce processing time across various financial use cases.</p>
+      <div className="flex justify-center items-center">
+        <ResponsiveContainer width="100%" height={400}>
+          <BarChart data={timeEfficiencyData}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" />
+            <YAxis label={{ value: 'Processing Time (% of Original)', angle: -90, position: 'insideLeft' }} />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="traditional" name="Traditional Database" fill="#8884d8" />
+            <Bar dataKey="graph" name="Graph Database" fill="#82ca9d" />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+      <div className="mt-4 text-sm text-gray-600">
+        <p>Source: Compiled from FinTech Global (2024), Gartner (2024), and Neo4j (n.d.) case studies.</p>
+      </div>
+    </div>
+  );
+
+  const renderAdoptionBarriers = () => (
+    <div className="chart-container">
+      <h3 className="text-xl font-semibold mb-4">Top Barriers to Graph Database Adoption (%)</h3>
+      <p className="mb-4">Despite their advantages, several factors continue to limit widespread adoption of graph databases in financial contexts.</p>
+      <div className="flex justify-center items-center">
+        <ResponsiveContainer width="100%" height={400}>
+          <BarChart data={adoptionBarriersData}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" />
+            <YAxis label={{ value: 'Percentage of Organizations', angle: -90, position: 'insideLeft' }} />
+            <Tooltip formatter={(value) => [`${value}%`, 'Organizations Citing This Barrier']} />
+            <Legend />
+            <Bar dataKey="value" name="% of Organizations" fill="#ff7300" />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+      <div className="mt-4 text-sm text-gray-600">
+        <p>Source: Gartner (2024). Emerging Technology Analysis: Graph Database Market Trends and Barriers.</p>
+      </div>
+    </div>
+  );
+
+  const renderFalsePositiveReduction = () => (
+    <div className="chart-container">
+      <h3 className="text-xl font-semibold mb-4">AML False Positive Rate Comparison (%)</h3>
+      <p className="mb-4">Graph databases significantly reduce false positive rates in Anti-Money Laundering (AML) monitoring.</p>
+      <div className="flex justify-center items-center">
+        <ResponsiveContainer width="100%" height={400}>
+          <PieChart>
+            <Pie
+              data={falsePositiveReductionData}
+              cx="50%"
+              cy="50%"
+              labelLine={true}
+              outerRadius={150}
+              label={({ name, value }) => `${name}: ${value}%`}
+              dataKey="value"
+            >
+            </Pie>
+            <Tooltip formatter={(value) => [`${value}%`, 'False Positive Rate']} />
+            <Legend />
+          </PieChart>
+        </ResponsiveContainer>
+      </div>
+      <div className="mt-4 text-sm text-gray-600">
+        <p>Source: FinTech Global (2024). Graph databases transforming financial crime detection and AML capabilities.</p>
+      </div>
+    </div>
+  );
+
+  const renderMarketAdoption = () => (
+    <div className="chart-container">
+      <h3 className="text-xl font-semibold mb-4">Graph Database Adoption in Financial Services (%)</h3>
+      <p className="mb-4">Adoption of graph databases in financial institutions has grown steadily, with projected continued growth.</p>
+      <div className="flex justify-center items-center">
+        <ResponsiveContainer width="100%" height={400}>
+          <AreaChart data={marketAdoptionData}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="year" />
+            <YAxis label={{ value: 'Adoption Rate (%)', angle: -90, position: 'insideLeft' }} />
+            <Tooltip formatter={(value, name, props) => {
+              return props.payload.projected ? 
+                [`${value}% (Projected)`, 'Adoption Rate'] : 
+                [`${value}%`, 'Adoption Rate'];
+            }} />
+            <Legend />
+            <Area type="monotone" dataKey="adoption" name="Financial Services Adoption" fill="#8884d8" fillOpacity={0.6} stroke="#8884d8" />
+          </AreaChart>
+        </ResponsiveContainer>
+      </div>
+      <div className="mt-4 text-sm text-gray-600">
+        <p>Source: Market analysis based on data from Gartner (2024) and McKinsey & Company (2024).</p>
+      </div>
+    </div>
+  );
+  
+  return (
+    <div className="p-4 max-w-4xl mx-auto">
+      <h2 className="text-2xl font-bold mb-6 text-center">Graph Databases in Financial Services: Key Metrics</h2>
+      
+      {/* Tab navigation */}
+      <div className="flex flex-wrap mb-6 border-b">
+        <button 
+          className={`p-3 font-medium ${activeTab === 'fraudReduction' ? 'border-b-2 border-blue-500 text-blue-600' : 'text-gray-600'}`}
+          onClick={() => setActiveTab('fraudReduction')}>
+          Fraud Reduction
+        </button>
+        <button 
+          className={`p-3 font-medium ${activeTab === 'timeEfficiency' ? 'border-b-2 border-blue-500 text-blue-600' : 'text-gray-600'}`}
+          onClick={() => setActiveTab('timeEfficiency')}>
+          Time Efficiency
+        </button>
+        <button 
+          className={`p-3 font-medium ${activeTab === 'adoptionBarriers' ? 'border-b-2 border-blue-500 text-blue-600' : 'text-gray-600'}`}
+          onClick={() => setActiveTab('adoptionBarriers')}>
+          Adoption Barriers
+        </button>
+        <button 
+          className={`p-3 font-medium ${activeTab === 'falsePositiveReduction' ? 'border-b-2 border-blue-500 text-blue-600' : 'text-gray-600'}`}
+          onClick={() => setActiveTab('falsePositiveReduction')}>
+          False Positives
+        </button>
+        <button 
+          className={`p-3 font-medium ${activeTab === 'marketAdoption' ? 'border-b-2 border-blue-500 text-blue-600' : 'text-gray-600'}`}
+          onClick={() => setActiveTab('marketAdoption')}>
+          Market Adoption
+        </button>
+      </div>
+      
+      {/* Active chart */}
+      <div className="border rounded-lg p-6">
+        {activeTab === 'fraudReduction' && renderFraudReduction()}
+        {activeTab === 'timeEfficiency' && renderTimeEfficiency()}
+        {activeTab === 'adoptionBarriers' && renderAdoptionBarriers()}
+        {activeTab === 'falsePositiveReduction' && renderFalsePositiveReduction()}
+        {activeTab === 'marketAdoption' && renderMarketAdoption()}
+      </div>
+      
+      <div className="mt-6 bg-gray-50 p-4 rounded-lg">
+        <h3 className="text-lg font-semibold mb-2">Key Insights</h3>
+        <ul className="list-disc pl-5 space-y-2">
+          <li>Graph databases reduce fraud losses by 43% compared to traditional approaches</li>
+          <li>Processing time for complex financial queries can be reduced by up to 95%</li>
+          <li>False positive rates in AML monitoring drop from 92% to 65%</li>
+          <li>Skills shortage remains the biggest barrier to adoption (68% of organizations)</li>
+          <li>Market adoption in financial services has more than quadrupled since 2020</li>
+        </ul>
+      </div>
+    </div>
+  );
+};
+
+export default GraphDatabaseVisualizations;
