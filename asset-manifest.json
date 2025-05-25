@@ -1,0 +1,10 @@
+{
+  "files": {
+    "main.js": "/graph-database-visualization/static/js/main.4a211e01.js",
+    "index.html": "/graph-database-visualization/index.html",
+    "main.4a211e01.js.map": "/graph-database-visualization/static/js/main.4a211e01.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.4a211e01.js"
+  ]
+}
